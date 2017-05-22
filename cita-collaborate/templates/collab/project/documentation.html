@@ -1,0 +1,28 @@
+{% extends "project/base.html" %}
+{% load markup %}
+{% block head_title %}{{ block.super }} Documentation {% endblock %}
+
+{% block h1 %}{{ block.super }} Documentation{% endblock %}
+
+{% block content %}
+
+{% if editable %}
+	<h2 class="offscreen">Operations</h2>
+	<ul class="linear">
+		<li class="linear"><a href="{% url doc_edit project_name=project.slug %}">Modify documentation</a></li>
+	</ul>
+
+{% endif %}
+
+
+{% if project.documentation %}
+	{{ project.documentation|textile }}
+{% else %}
+	<h3>Description</h3>
+	<p>The "documentation" section is a generic area where one can put notes, links, etc.</p>
+	
+	<h3>Documentation</h3>
+	<p>This group has no documentation (yet).</p>
+{% endif %}
+
+{% endblock %}

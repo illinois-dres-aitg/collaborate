@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load project_tags %}
+
+{% block head_title %}{{ block.super }}{{ profile.user.username }} Profile{% endblock %}
+
+{% block h1 %}{{ block.super }}{{ profile.user.username }} Profile{% endblock %}
+
+{% block operations %}<h2 class="offscreen">Operations</h2>{% endblock %}
+
+{% block content %}
+
+<ul class="linear">
+{% if user_is_admin %}
+	<li class="linear"><a href="{% url profiles_edit username=profile.user.username %}">Edit profile</a></li>
+{% else %}
+	<li class="linear"><a href="{% url profiles_edit_profile %}">Edit profile</a></li>
+{% endif %}
+{% ifequal user.id profile.user.id %}
+	<li class="linear"><a href="{% url auth_password_change %}">Change password</a></li>
+{% endifequal %}
+
+{% ifnotequal user.id profile.user.id %}
+	<li class="linear"><a href="{% url profiles_contact_user profile.user.username %}">Contact {{ profile.user.username }}</a></li>
+{% endifnotequal %}
+</ul>
+
+<h2>Profile</h2>
+<ul>
+	<li>User Name: {{ profile.user.username }}</li>
+	<li>First Name: {{ profile.user.first_name }}</li>
+	<li>Last Name: {{ profile.user.last_name }}</li>
+	<li>Affiliation: {{ profile.affiliation }}</li>
+	<li>Job Title: {{ profile.job_title }}</li>
+	<li>Email Address: {{ profile.user.email }}</li>
+	<li>Phone Number: {% if profile.phone %}{{ profile.phone }}{% else %}None{% endif %}</li>
+	<li>Disability: {{ profile.disability }}</li>
+</ul>
+
+<h2>Groups {{ profile.user.username }} is member of:</h2>
+{% if profile.user.projects.all %}
+	<ul>
+		{% for project in profile.user.projects.all %}
+			<li>
+				<a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
+				<br>Roles:
+				<ul>
+					{% for role in project.roles.all %}
+						{% for user in role.users.all %}
+							{% ifequal user.id profile.user.id %}
+								<li>{{ role.name }}</li>
+							{% endifequal %}
+						{% endfor %}
+					{% endfor %}
+				</ul>
+			</li>
+			
+		{% endfor %}
+	</ul>
+{% else %}
+	<p>{{ profile.user.username }} is not a member of any group!</p>
+{% endif %}
+
+<h2>Groups {{ profile.user.username }} is administrator of:</h2>
+{% if profile.user.projects.all %}
+	<ul>
+		{% for project in profile.user.projects.all %}
+			{% if profile.user.id|is_project_admin:project.slug %}
+				<li><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></li>
+			{% endif %}
+		{% endfor %}
+	</ul>
+{% else %}
+	<p>{{ profile.user.username }} is not an administrator of any group!</p>
+{% endif %}
+
+{% endblock %}

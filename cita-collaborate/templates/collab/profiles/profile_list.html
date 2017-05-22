@@ -1,0 +1,60 @@
+{% extends "project/base.html" %}
+{% load project_tags %}
+
+{% block head_title %}{{ block.super }} Active Members{% endblock %}
+
+{% block h1 %}{{ block.super }} Active Members{% endblock %}
+
+
+{% block content %}
+
+
+{% if user.id|is_project_admin:project.slug or user.is_superuser %}
+<h2 class="offscreen">Operations</h2>
+<ul class="linear">
+	<li class="linear"><a href="{{ project.get_absolute_url }}members/add">Add members</a></li>
+	<li class="linear"><a href="{{ project.get_absolute_url }}members/remove">Remove members</a></li>
+	<li class="linear"><a href="{% url project_members_activate project_name=project.slug,activate_or_inactivate="activate" %}">Activate members</a></li>
+	<li class="linear"><a href="{% url project_members_activate project_name=project.slug,activate_or_inactivate="inactivate" %}">Deactivate members</a></li>
+	<li class="linear"><a href="{{ project.get_absolute_url }}members/all">All members</a></li>
+	<li class="linear"><a href="{% url project_members_download project_name=project.slug %}">Download member list</a></li>
+</ul>
+{% endif %}
+
+
+<h2>Group Administrators</h2>
+
+<dl>
+{% for person in project.admin.all %}
+	{% if show_contact %}
+		<dt><a href="{% url profiles_contact_user username=person.username %}">{{ person.last_name }}, {{ person.first_name }}</a></dt>
+	{% else %}
+		<dt>{{ person.last_name }}, {{ person.first_name }}</dt>
+	{% endif %}
+	<dd>{{ person.profile.all.0.affiliation }}</dd>
+	{% if user.is_superuser %}
+		<dd><a href="{% url profiles_profile_detail username=person.username %}">Profile</a></dd>
+	{% endif %}
+{% endfor %}
+</dl>
+
+<h2>Members</h2>
+
+<dl>
+{% for profile in object_list %}
+	{% if show_contact %}
+		<dt><a href="{% url profiles_contact_user username=profile.user.username %}">{{ profile.user.last_name }}, {{ profile.user.first_name }}</a></dt>
+	{% else %}
+		<dt>{{ profile.user.last_name }}, {{ profile.user.first_name }}</dt>
+	{% endif %}
+	<dd>{{ profile.affiliation }}</dd>
+	{% if user.is_superuser %}
+		<dd><a href="{% url profiles_profile_detail username=profile.user.username %}">Profile</a></dd>
+	{% endif %}
+{% endfor %}
+</dl>
+
+
+
+
+{% endblock %}

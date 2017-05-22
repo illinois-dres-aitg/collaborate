@@ -1,0 +1,35 @@
+{% extends "issues/editbase.html" %}
+
+{% block head_title %}{{ block.super }}{% if edit %}Modify{% else %}Add{% endif %}{% endblock %}
+
+{% block h1 %}{{ block.super }}{% if edit %}Modify{% else %}Add{% endif %}{% endblock %}
+
+{% block content %}
+
+{% if edit %}
+	<p class="delete"><A class="delete" href="{% url issueset_delete project.slug,issueset.id %}">Delete this issue list</a>
+{% endif %}
+
+<h2>{% if edit %}Modify an{% else %}Add an{% endif %} issue list: {{ issueset.name }}</h2>
+
+{% if not edit %}
+	<p>Before creating a new issue list, please ensure that your issue does not fit well with the existing issue lists.</p>
+{% endif %}
+
+
+<form method=POST action="">
+	<input type="submit" value="{% if edit %}Modify {{ issueset.name }}{% else %}Add issue list{% endif %}" />
+	<table summary="Form for editing an issue list">
+		{% for field in form %}
+			<tr><th class="form"><label for="id_{{ field.name }}">{{ field.label }} {% if field.field.required  %}<img src="{{ MEDIA_URL }}images/required.png" alt="required"/>{% endif %}</label></th><td>{{ field }}</td></tr>
+			{% if field.field.help_text %}
+				<tr><th></th><td>{{ field.field.help_text }}</td></tr>
+			{% endif %}
+		{% endfor %}
+	</table>
+	<input type="submit" value="{% if edit %}Modify {{ issueset.name }}{% else %}Add issue list{% endif %}" />
+</form>
+
+
+
+{% endblock %}

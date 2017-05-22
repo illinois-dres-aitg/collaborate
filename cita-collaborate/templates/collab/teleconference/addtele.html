@@ -1,0 +1,115 @@
+{% extends "teleconference/editbase.html" %}
+
+{% block head_title %}{{ block.super }}{% if edit %}Modify a{% else %}Add a{% endif %} teleconference{% endblock %}
+
+{% block h1 %}{{ block.super }}{% if edit %}Modify a{% else %}Add a{% endif %} teleconference{% endblock %}
+
+{% block content %}
+
+{% if edit %}
+	<p class="delete"><A class="delete" href="{% url tele_delete project.slug,teleconference.id %}">Delete this teleconference</a></p>
+{% endif %}
+
+{% if see_action %}
+
+	<script type="text/javascript">
+	<!--
+	function addAction() {
+		textbox = document.getElementById('id_agenda');
+		textbox.value = textbox.value + "{{ action_text }}";
+	}
+	-->
+	</script>
+
+{% endif %}
+
+
+{% if last_tele %}
+	<script type="text/javascript">
+	<!--
+	function addLastTele() {
+		agenda_box = document.getElementById('id_agenda');
+		agenda_box.value = agenda_box.value + "{{ last_tele.agenda }}";
+		location_box = document.getElementById('id_location');
+		location_box.value = "{{ last_tele.location }}";
+		number_box = document.getElementById('id_phone');
+		number_box.value = "{{ last_tele.number }}";
+		password_box = document.getElementById('id_phone_code');
+		password_box.value = "{{ last_tele.password }}";  
+		url_box = document.getElementById('id_online_uri');
+		url_box.value = "{{ last_tele.url }}";
+		userid_box = document.getElementById('id_online_userid');
+		userid_box.value = "{{ last_tele.userid }}";
+		opassword_box = document.getElementById('id_online_password');
+		opassword_box.value = "{{ last_tele.opassword }}";
+		instructions_box = document.getElementById('id_online_instructions');
+		instructions_box.value = "{{ last_tele.instructions }}";
+		other_instructions_box = document.getElementById('id_other_instructions');
+		other_instructions_box.value = "{{ last_tele.other_instructions }}";
+		notes_box = document.getElementById('id_notes');
+		notes_box.value = "{{ last_tele.notes }}";
+		hour_box = document.getElementById('id_time_0');
+		hour_box.value = "{{ last_tele.time_h }}";
+		minute_box = document.getElementById('id_time_1');
+		minute_box.value = "{{ last_tele.time_m }}";
+		durhour_box = document.getElementById('id_duration_0');
+		durhour_box.value = "{{ last_tele.duration_h }}";
+		durminute_box = document.getElementById('id_duration_1');
+		durminute_box.value = "{{ last_tele.duration_m }}";
+		year_box = document.getElementById('id_date_year');
+		year_box.value = "{{ last_tele.year }}";
+		month_box = document.getElementById('id_date_month');
+		month_box.value = "{{ last_tele.month }}";
+		day_box = document.getElementById('id_date_day');
+		day_box.value = "{{ last_tele.day }}";
+	}
+	-->
+	</script>
+{% endif %}
+
+<h2>{% if edit %}Modify a{% else %}Add a new{% endif %} teleconference</h2>
+
+<p>Two new buttons have been added. The <i>Add open action items</i> button will make a bulleted list of open action items and append it to the agenda. The <i>Add last teleconference</i> will populate the form with the last <i>completed</i> teleconference. The date will be estimated based on the previous teleconferences. 
+
+<p>These two features are currently <b>experimental</b>. There may be some formatting issues, so please manually check all the content before submitting the form. 
+
+<div class="form">
+<form method=POST action="">
+	<input type="submit" value="{% if edit %}Modify{% else %}Add{% endif %} teleconference"/>
+	<table summary="Editing a teleconference">
+		<tr><th class="form"><label for="id_{{ form.date.name }}">{{ form.date.label }} {% if form.date.field.required  %}<img src="{{ MEDIA_URL }}images/required.png" alt="required"/>{% endif %}</label></th><td>{{ form.date }}</td></tr>
+		<tr><th class="form"><label for="id_{{ form.time.name }}">{{ form.time.label }} {% if form.time.field.required  %}<img src="{{ MEDIA_URL }}images/required.png" alt="required"/>{% endif %}</label></th><td>{{ form.time }}</td></tr>
+		<tr><th class="form"><label for="id_{{ form.duration.name }}">{{ form.duration.label }} {% if form.duration.field.required  %}<img src="{{ MEDIA_URL }}images/required.png" alt="required"/>{% endif %}</label></th><td>{{ form.duration }}</td></tr>
+	
+		{% for field in form %}
+			{% ifnotequal field.name "date" %}
+				{% ifnotequal field.name "time" %}
+					{% ifnotequal field.name "duration" %}
+						{% ifequal field.name "agenda" %}
+							<tr><th class="form"></th><td>
+							{% if see_action %}
+								<br><input type="button" value="Add open action items" onclick="addAction();">
+							{% endif %}
+							{% if last_tele %}
+								<input type="button" value="Add last teleconference" onclick="addLastTele();"/>
+							{% endif %}
+							  </td>
+							</tr>
+						{% endifequal %}
+						<tr><th class="form"><label for="id_{{ field.name }}">{{ field.label }} {% if field.field.required  %}<img src="{{ MEDIA_URL }}images/required.png" alt="required"/>{% endif %}</label></th><td>{{ field }}</td></tr>
+						{% if field.field.help_text %}
+							<tr><th></th><td>{{ field.field.help_text }}</td></tr>
+						{% endif %}
+					{% endifnotequal %}
+				{% endifnotequal %}
+			{% endifnotequal %}
+		{% endfor %}
+	</table>
+	<input type="submit" value="{% if edit %}Modify{% else %}Add{% endif %} teleconference"/>
+</form>
+</div>
+
+{% include 'markup.html' %}
+
+{% endblock %}
+

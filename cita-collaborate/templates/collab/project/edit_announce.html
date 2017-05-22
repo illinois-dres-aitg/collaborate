@@ -1,0 +1,33 @@
+{% extends "project/base.html" %}
+
+{% block head_title %}{{ block.super }}: Modify {{ project.name }} Announcements{% endblock %}
+
+
+{% block h1 %}{{ block.super }} - Modify {{ project.name }} Announcements{% endblock %}
+
+{% block content %}
+
+{% if announce_warning %}
+	<p><b>Warning:</b> Announcements for this group are <i>not</i> viewable by everyone. Please keep this in mind as you write this announcement. Group admins can modify who can and cannot see an announcement via the <a href="{% url roles_overview project_name=project.slug %}">Roles</a> page.</p>
+{% endif %}
+
+
+<div class="form">
+<form method=POST action="">
+	<input type="submit" value="Modify {{ project.name }} announcement" />
+	<table summary="Form for modifying group announcements">
+		{% for field in form %}
+			<tr><th class="form"><label for="id_{{ field.name }}">{{ field.label }} {% if field.field.required  %}<img src="{{ MEDIA_URL }}images/required.png" alt="required"/>{% endif %}</label></th><td>{{ field }}</td></tr>
+			{% if field.field.help_text %}
+				<tr><th></th><td>{{ field.field.help_text }}</td></tr>
+			{% endif %}
+		{% endfor %}
+	</table>
+	<input type="submit" value="Modify {{ project.name }} announcement" />
+</form>
+</div>
+{% include 'markup.html' %}
+
+
+
+{% endblock %}

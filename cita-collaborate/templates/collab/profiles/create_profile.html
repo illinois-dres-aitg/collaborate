@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block head_title %}{{ block.super }}Create a profile for {{ user.username }}{% endblock %}
+
+{% block h1 %}{{ block.super }}Create a profile for {{ user.username }}{% endblock %}
+
+{% block content %}
+
+{% if form.has_errors %}
+<p>Your form had errors. Please correct them.</p>
+{% endif %}
+
+<form method="post" action=".">
+<dl>
+	{% for field in form %}
+		{% if field.field.required %}
+			{% ifnotequal field.name "affiliation" %}
+				<dt><label for="id_{{ field.name }}">{{ field.label }} {% if field.field.required  %}<img src="{{ MEDIA_URL }}images/required.png" alt="required"/>{% endif %}</label></dt>
+				<dd>{{ field }}</dd>
+				{% if field.field.help_text %}
+					<dd>{{ field.field.help_text }}</dd>
+				{% endif %}
+			{% endifnotequal %}
+		{% endif %}
+	{% endfor %}
+	{% for field in form %}
+		{% if field.field.required %}
+			{% ifequal field.name "affiliation" %}
+				<dt><label for="id_{{ field.name }}">{{ field.label }} {% if field.field.required  %}<img src="{{ MEDIA_URL }}images/required.png" alt="required"/>{% endif %}</label></dt>
+				<dd>{{ field }}</dd>
+				{% if field.field.help_text %}
+					<dd>{{ field.field.help_text }}</dd>
+				{% endif %}
+			{% endifequal %}
+		{% endif %}
+	{% endfor %}
+	{% for field in form %}
+		{% if not field.field.required %}
+			<dt><label for="id_{{ field.name }}">{{ field.label }} {% if field.field.required  %}<img src="{{ MEDIA_URL }}images/required.png" alt="required"/>{% endif %}</label></dt>
+			<dd>{{ field }}</dd>
+			{% if field.field.help_text %}
+				<dd>{{ field.field.help_text }}</dd>
+			{% endif %}
+		{% endif %}
+	{% endfor %}
+</dl>
+<input type="submit" value="Create profile" />
+</form>
+
+{% endblock %}

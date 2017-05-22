@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load markup %}
+{% load project_tags %}
+
+{% block head_title %}{{ project.name }}{% endblock %}
+{% block feed %}{{ project.slug }}/{% endblock %}
+
+{% block h1 %}{{ project.name }}{% endblock %}
+
+
+{% block project_menu %}
+<h2><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></h2>
+<ul>
+	<li><a href="{{ project.get_absolute_url }}">Overview</a></li>
+	{% if menu_allowed.teleconference %}
+		<li><a href="{% url tele_overview project.slug %}">Teleconferences</a></li>
+	{% endif %}
+	{% if menu_allowed.action %}
+		<li><a href="{% url action_overview project.slug %}">Action Items</a></li>
+	{% endif %}
+	{% if menu_allowed.issuel %}
+		<li><a href="{% url issuesets_overview project.slug %}">Issue Lists</a></li>
+	{% endif %}
+	{% if menu_allowed.documentation %}
+		<li><a href="{% url documentation project_name=project.slug %}">Documentation</a></li>
+	{% endif %}
+	{% if project.mailing_list_url %}
+		<li><a href="{{ project.mailing_list_url }}" target="_mailing">Mailing List</a></li>
+	{% endif %}
+	<li><a href="{% url project_members project.slug %}">Members</a></li>
+	{% if subscribe_menu %}
+		<li><a href="{% url project_subscribe project_name=project.slug %}">Join {{ project.name }}</a></li>
+	{% endif %}	
+	{% if menu_allowed.announcements %}
+		<li><a href="{% url announce_edit project_name=project.slug %}">Announcements</a></li>
+	{% endif %}
+	{% if user.id|is_project_admin:project.slug or user.is_superuser %}
+		<li><a href="{% url roles_overview project.slug %}">Roles</a></li>
+	{% endif %}	{% if user.id|is_project_admin:project.slug or user.is_superuser %} 
+		<li><a href="{% url project_edit project_name=project.slug%}">Modify group information</a></li>
+	{% endif %} 
+
+
+</ul>
+{{ block.super }}
+{% endblock %}
+
+
+
+{% block Announcements %}
+
+{{ block.super }}
+
+{% if project.announcements and not announce_expired %}
+	{% if announce_view %} 
+			<h2 class="announcement">Announcements</h2>
+			{{ project.announcements|textile }}
+	{% endif %} 
+{% endif %}
+
+{% endblock %}
+

@@ -1,0 +1,105 @@
+{% extends "teleconference/base.html" %}
+{% load markup %}
+
+{% block head_title %}{{ block.super }}Teleconference Details{% endblock %}
+
+{% block h1 %}{{ block.super }}Teleconference Details{% endblock %}
+
+{% block content %}
+
+
+{% if deletable or edit_minutes %}
+<h2 class="offscreen">Operations</h2>
+<ul class="linear">
+{% if deletable %}
+	<li class="linear"><a href="{% url tele_edit project.slug,teleconference.id %}">Modify teleconference</a></li>
+{% endif %}
+{% if edit_minutes %} 
+	<li class="linear"><a href="{% url minutes_edit project.slug,teleconference.id %}">Modify minutes</a></li>
+{% endif %}
+{% if deletable %}
+	<li class="linear"><a href="{% url tele_add project.slug %}">Add a new teleconference</a></li>
+{% endif %}
+</ul>
+{% endif %}
+
+<h2>Teleconference details</h2>
+	<ul>
+	        <li>Date: {{ teleconference.time|date:"D, d M, Y" }}</li>
+		<li>Time: 	
+			<ul>
+			{% if time_zone %}
+				{% for tz, time in teleconference.return_times %}
+					{% ifequal tz time_zone %}
+						<li>Local Time: {{ time|date:" f A" }} ({{ tz }})</a></li>
+					{% endifequal %}
+				{% endfor %}
+				<li>UTC Time: {{ teleconference.return_times.4.1|date:" f A" }}</li>
+			{% else %}
+				{% for tz, time in teleconference.return_times %}<li>{{ time|date:" f A" }} ({{ time.tzinfo }}) {% endfor %}</a></li>
+			{% endif %}
+			</ul>
+		</li>
+		{% if teleconference.duration %}
+			<li>Duration: {{ teleconference.duration|time:"G \h\r" }}{% ifnotequal teleconference.duration.minute 00 %}{{ teleconference.duration|time:" i \m\i\n\u\t\e\s" }}{% endifnotequal %}</li>
+		{% endif %}
+		{% if teleconference.location %}
+			<li>Location: {{ teleconference.location }}</li>
+		{% endif %}
+		{% if teleconference.phone %}
+			<li>Phone: {{ teleconference.phone }}</li>
+		{% endif %}
+		{% if teleconference.phone_code %}
+			<li>Phone code: {{ teleconference.phone_code }}</li>
+		{% endif %}
+		{% if teleconference.online_uri %}
+			<li>Online URL: {{ teleconference.online_uri|urlize }}</li>
+		{% endif %}
+		{% if teleconference.online_userid %}
+			<li>Online userid: {{ teleconference.online_userid }}</li>
+		{% endif %}
+		{% if teleconference.online_password %}
+			<li>Online Password: {{ teleconference.online_password }}</li>
+		{% endif %}
+		{% if teleconference.online_instructions %}
+			<li>Online Instructions: {{ teleconference.online_instructions|textile }}</li>
+		{% endif %}
+		{% if teleconference.other_instructions %}
+			<li>Other instructions: {{ teleconference.other_instructions|textile }}</li>
+		{% endif %}
+	</ul>
+	{% if user.is_authenticated %}
+		{% if not time_zone %}
+			<p><p><b>Note:</b> You can set a preferred time zone in your <a href="{% url profiles_edit_profile %}">profile</a>.</p>
+		{% endif %}
+	{% endif %}
+	
+	<h2>Agenda</h2>
+	
+	{{ teleconference.agenda|textile }}
+	
+	{% if teleconference.notes %}
+		<h3>Notes</h3>
+		{{ teleconference.notes|textile }}
+	{% endif %}
+
+	<h2>Minutes</h2>
+	{% if teleconference.minutes %}{{ teleconference.minutes.minutes_text|textile }}{% else %}Coming soon!{% endif %}
+	
+	{% if teleconference.minutes.get_participants.all.0 or other_participants %}
+		<h3>Participants</h3>
+		<ul>
+		{% for participant in teleconference.minutes.get_participants.all %}
+			<li>{{ participant.profile.all.0 }}</li>
+		{% endfor %}
+		{% if other_participants %}
+			{% for participant in other_participants %}
+				<li>{{ participant }}</li>
+			{% endfor %}
+		{% endif %}
+		</ul>
+	{% endif %}
+
+
+
+{% endblock %}

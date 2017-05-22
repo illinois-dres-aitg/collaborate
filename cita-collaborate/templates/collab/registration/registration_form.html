@@ -1,0 +1,25 @@
+{% extends "registration/base.html" %}
+
+{% block head_title %}{{ block.super }}Registration{% endblock %}
+
+{% block h1 %}{{ block.super }}Registration{% endblock %}
+
+
+{% block content %}
+
+
+
+<form method=POST action="">
+	<table class=box summary="Registration form">
+		{% for field in form %}
+			<tr><th class="form"><label for="id_{{ field.name }}">{{ field.label }} {% if field.field.required  %}<img src="{{ MEDIA_URL }}images/required.png" alt="required"/>{% endif %}</label></th><td>{{ field }}</td></tr>
+			{% if field.field.help_text %}
+				<tr><th></th><td>{{ field.field.help_text }}</td></tr>
+			{% endif %}
+		{% endfor %}
+	</table>
+	<input type="submit" value="Register" />
+</form>
+
+
+{% endblock %}

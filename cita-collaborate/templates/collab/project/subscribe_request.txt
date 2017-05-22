@@ -1,0 +1,14 @@
+Hi,
+
+The following user has requested to join the group {{ project.name }}:
+
+User Name: {{ subscriber.username }}
+Name: {{ subscriber.first_name }} {{ subscriber.last_name }}
+Email: {{ subscriber.email }}
+Affiliation: {{ subscriber.profile.all.0.affiliation }}
+
+If you wish to approve this request, please go to:
+
+http://{{ SITE_URL }}{% url add_single_user project_name=project.slug,userid=subscriber.username %}
+
+If you do not wish to approve this request, you may ignore this email.

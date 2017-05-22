@@ -1,0 +1,35 @@
+{% extends "project/base.html" %}
+
+{% block head_title %}{{ block.super }}{% endblock %}
+
+{% block h1 %}{{ block.super }}{% endblock %}
+
+{% block content %}
+
+{% ifequal task "add" %}
+	<h2 class="offscreen">Operations</h2>
+	<ul class="linear">
+		<li class="linear"><a href="{% url project_members_filter project_name=project.slug %}">Limit</a> the list of users to that of a certain group.</li>
+	</ul>
+
+
+{% endifequal %}
+
+
+<h2>{% block h2 %}{% endblock %}</h2>
+
+{% ifequal task "add" %}
+	<p>Please note that all new members will be added to the default role which currently is <b>{{ project.default_role.name }}</b>. </p>
+{% endifequal %}
+
+<form method=POST action="">
+	<table summary="{% block tablesummary %}{% endblock %}">
+		{% for field in form %}
+			<tr><th class="form"><label for="id_{{ field.name }}">{{ field.label }} {% if field.field.required  %}<img src="{{ MEDIA_URL }}images/required.png" alt="required"/>{% endif %}</label></th><td>{{ field }}</td></tr>
+		{% endfor %}
+	</table>
+	<input type="submit" value="{% block submitvalue %}{% endblock %}"/>
+</form>
+
+
+{% endblock %}

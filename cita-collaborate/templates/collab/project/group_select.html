@@ -1,0 +1,15 @@
+{% extends 'project/base.html' %}
+
+{% block head_title %}{{ block.super }}: Limit users to add by group{% endblock %}
+
+{% block h1 %}Limit users to add by group{% endblock %}
+
+{% block content %}
+
+<ul>
+{% for proj in projects %}
+	<li><a href="{% url members_add_filter project_name=project.slug,add_or_remove="add",project_limit=proj.slug %}">{{ proj.name }}</a></li>
+{% endfor %}
+</ul>
+
+{% endblock %}

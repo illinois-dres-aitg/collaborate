@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load markup %}
+
+{% block head_title %}About Collaborations{% endblock %}
+
+{% block h1 %}About Collaborations{% endblock %}
+
+{% block content %}
+
+{{ overview|textile }}
+
+<h2>Site Statistics</h2>
+
+<dl>
+  <dt>Number of groups</dt>
+  <dd>{{ stats.num_groups }}</dd>
+  <dt>Number of users</dt>
+  <dd>{{ stats.num_users }}</dd>
+  <dt>Breakdown of users</dt>
+  <dd>
+	<ul>
+	{% for tld, number in stats.email_stats.items %}
+		<li>{{ tld }}: {{ number }}</li>	
+	{% endfor %}
+	</ul>
+  </dd>
+</dl>
+
+<p>Return to the <a href="/">main</a> page.
+
+{% endblock %}
+

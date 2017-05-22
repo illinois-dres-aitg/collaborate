@@ -1,0 +1,1 @@
+{{ obj.project }}: {{ obj.time|date:"D d M Y," }}{% for tz, time in obj.return_times %}{{ time|date:" f A" }} ({{ time.tzinfo }}) {% endfor %}

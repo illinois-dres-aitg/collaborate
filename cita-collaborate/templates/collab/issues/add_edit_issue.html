@@ -1,0 +1,35 @@
+{% extends "issues/editbase.html" %}
+
+
+
+{% block head_title %}{{ block.super }}{{ issueset.name }}: {% if edit %}Modify{% else %}Add{% endif %} issue{% endblock %}
+
+{% block h1 %}{{ block.super }}{% if edit %}Modify{% else %}Add{% endif %} an issue{% endblock %}
+
+{% block content %}
+
+{% if edit %}
+	<p class="delete"><A class="delete" href="{% url issue_delete project.slug,issue.issueset.id,issue.id %}">Delete this issue</a>
+{% endif %}
+
+<h2>{% if edit %}Modify{% else %}Add{% endif %} an issue</h2>
+
+<div class="form">
+<form method=POST action="">
+	<input type="submit" name="Submit" value="{% if edit %}Modify{% else %}Add{% endif %} issue" />
+	<table summary="Form for editing an issue">
+		{% for field in form %}
+			<tr><th class="form"><label for="id_{{ field.name }}">{{ field.label }} {% if field.field.required  %}<img src="{{ MEDIA_URL }}images/required.png" alt="required"/>{% endif %}</label></th><td>{{ field }}</td></tr>
+			{% if field.field.help_text %}
+				<tr><th></th><td>{{ field.field.help_text }}</td></tr>
+			{% endif %}
+		{% endfor %}
+	</table>
+	<input type="submit" name="Submit" value="{% if edit %}Modify{% else %}Add{% endif %} issue" />
+</form>
+</div>
+{% include 'markup.html' %}
+
+
+
+{% endblock %}

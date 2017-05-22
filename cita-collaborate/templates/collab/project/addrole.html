@@ -1,0 +1,46 @@
+{% extends "project/base.html" %}
+
+{% block head_title %}{{ block.super }}: {% if edit %}Modify{% else %}Add a{% endif %} role.{% endblock %}
+
+
+{% block h1 %}{{ block.super }} - {% if edit %}Modify{% else %}Add{% endif %} a role{% endblock %}
+
+{% block content %}
+
+{% if edit %}
+	{% ifnotequal role.name "AnonymousRole" %}
+		<p class="delete"><A class="delete" href="{% url role_delete project_name=role.project.slug,role_id=role.id %}">Delete this role</a></li>
+	{% endifnotequal %}
+{% endif %}
+
+<h2>{% if edit %}Modify {{ role.name }}{% else %}Add a role{% endif %}</h2>
+
+<p>Note: If you select an "Editable" privilege without selecting the corresponding "Viewable" privilege, the latter will be added for you anyway.</p>
+<p>Note: Group and site admins have privileges to access anything in the group - regardless of what you set here.</p>
+
+<form method=POST action="">
+	<input type="submit" value="{% if edit %}Modify{% else %}Add{% endif %} role" />
+	<p>{{ form.name.label_tag }} {{ form.name }}</p>
+	<p class="helptext">{{ form.name.help_text }}</p>
+	{% if form.name.errors %}<p class="errorlist">{{ form.name.errors }}</p>{% endif %}
+
+	<p>{{ form.make_default.label_tag }} {{ form.make_default }}</p>
+	<p class="helptext">{{ form.make_default.help_text }}</p>
+	{% if form.make_default.errors %}<p class="errorlist">{{ form.make_default.errors }}</p>{% endif %}
+	
+	<p>{{ form.privileges.label_tag }} {{ form.privileges }}</p>
+	<p class="helptext">{{ form.privileges.help_text }}</p>
+	{% if form.privileges.errors %}<p class="errorlist">{{ form.privileges.errors }}</p>{% endif %}
+
+	{% ifnotequal role.name "AnonymousRole" %}
+		<p>{{ form.users.label_tag }} {{ form.users }}</p>
+		<p class="helptext">{{ form.users.help_text }}</p>
+		{% if form.users.errors %}<p class="errorlist">{{ form.users.errors }}</p>{% endif %}
+	{% endifnotequal %}
+
+
+	<input type="submit" value="{% if edit %}Modify{% else %}Add{% endif %} role" />
+</form>
+
+
+{% endblock %}

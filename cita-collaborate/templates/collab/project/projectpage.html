@@ -1,0 +1,139 @@
+{% extends "project/base.html" %}
+{% load markup %}
+{% block head_title %}{{ block.super }} Overview {% endblock %}
+
+{% block h1 %}{{ block.super }} Overview{% endblock %}
+
+
+{% block content %}
+
+
+{% if project.summary %}
+	<h2>About {{ project.name }}</h2>
+	{{ project.summary|textile }}
+{% endif %}
+
+
+
+{% if privileges.TeleView %}
+	<h2>Next Teleconference</h2>
+	{% if conferences %}
+		<p><b>Time</b>: {{ conferences.0.time|date:"D d M Y, \a\t"}}
+		{% if time_zone %}
+			{% for tz, time in conferences.0.return_times %}
+				{% ifequal tz time_zone %}
+					{{ time|date:" f A" }} ({{ tz }})</a></li>
+				{% endifequal %}
+			{% endfor %}
+		{% else %}
+			{% for tz, time in conferences.0.return_times %}{{ time|date:" f A" }} ({{ time.tzinfo }}) {% endfor %}</a></li>
+		{% endif %}
+		{% if conferences.0.duration %}
+		<br><b>Duration</b>: {{ conferences.0.duration|time:"G \h\r" }}{% ifnotequal conferences.0.duration.minute 00 %}{{ conferences.0.duration|time:" i \m\i\n\u\t\e\s" }}{% endifnotequal %}</li>
+		{% endif %}
+		{% if conferences.0.phone %}
+			<br><b>Phone</b>: {{ conferences.0.phone }}
+		{% endif %}
+		{% if conferences.0.phone_code %}
+			<br><b>Phone Code</b>: {{ conferences.0.phone_code }}
+		{% endif %}
+		{% if conferences.0.online_uri %}
+			<br><b>Online URL</b>: {{ conferences.0.online_uri|urlize }}
+		{% endif %}
+		{% if conferences.0.online_userid %}
+			<br><b>Online UserID</b>: {{ conferences.0.online_userid }}
+		{% endif %}
+		{% if conferences.0.online_password %}
+			<br><b>Online Password</b>: {{ conferences.0.online_password }}
+		{% endif %}
+		<br><b>Agenda</b>: {{ conferences.0.agenda|textile }}
+		<br><a href="{{ conferences.0.get_absolute_url }}">Details</a>
+	{% else %}
+		<p>No teleconferences have been scheduled.</p>
+	{% endif %}
+{% endif %}
+
+{% if privileges.TeleView %}
+
+	<h2>Upcoming Teleconferences</h2>
+	
+	{% if privileges.TeleEdit %}
+		<ul class="linear">
+			<li class="linear"><a href="{% url tele_add project_name=project.slug %}">Add a teleconference</a></li>
+		</ul>
+	{% endif %}
+
+
+	{% if conferences %}
+		<ul>
+		{% for conference in conferences %}
+			<li><a href="{{ conference.get_absolute_url }}">{{ conference.time|date:"D d M Y, \a\t" }}
+			{% if time_zone %}
+				{% for tz, time in conference.return_times %}
+					{% ifequal tz time_zone %}
+						{{ time|date:" f A" }} ({{ tz }})</a></li>
+					{% endifequal %}
+				{% endfor %}
+			{% else %}
+				{% for tz, time in conference.return_times %}{{ time|date:" f A" }} ({{ time.tzinfo }}) {% endfor %}</a></li>
+			{% endif %}
+		{% endfor %}
+		</ul>
+	{% else %}
+		<p>There are no scheduled teleconferences.</p>
+	{% endif %}
+{% endif %}
+
+
+
+{% if privileges.ActionView %}
+	<h2>Open Action Items {% if actions %}({{ actions|length }}){% endif %}</h2>
+	
+	{% if privileges.ActionEdit %}
+		<ul class="linear">
+			<li class="linear"><a href="{% url action_add project_name=project.slug %}">Add an action item</a></li>
+		</ul>
+	{% endif %}
+
+
+		{% if actions %}
+			<ol>
+				{% for action in actions %}
+					<li>
+						<a href="{{ action.get_absolute_url }}">{{ action.action }}, {{ action.owner }}, {{ action.deadline|date:"D d M Y" }}</a>
+ 					</li>
+				{% endfor %}
+			</ol>
+		{% else %}
+			<p>There are no open action items.</p> 
+		{% endif %}
+{% endif %}
+
+
+{% if privileges.IssueSetView %}
+
+
+	<h2>Active Issue Lists</h2>
+
+		{% if privileges.IssueSetEdit %}
+			<ul class="linear">
+				<li class="linear"><a href="{% url issueset_add project_name=project.slug %}">Add an issue list</a></li>
+			</ul>
+		{% endif %}
+
+		{% if issuesets %}
+			<ul>
+				{% for issueset in issuesets %}
+					<li>
+						<a href="{{ issueset.get_absolute_url }}">{{ issueset.name }}</a>
+ 					</li>
+				{% endfor %}
+			</ul>
+		{% else %}
+			<p>There are no active issue lists.</p>
+		{% endif %}
+{% endif %}
+
+	
+{% endblock %}
+

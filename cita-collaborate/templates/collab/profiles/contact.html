@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block head_title %}{{ block.super }}Contact {{ contacted.username }}{% endblock %}
+
+{% block h1 %}{{ block.super }}Contact {{ contacted.username }}{% endblock %}
+
+{% block content %}
+
+<h2>Contact Form</h2>
+
+<p>Your email address will be provided to {{ contacted.first_name }} {{ contacted.last_name }} in the email sent to him/her.</p>
+
+<form method=POST action="">
+	<table summary="Form for contacting a user">
+		{% for field in form %}
+			<tr><th class="form"><label for="id_{{ field.name }}">{{ field.label }} {% if field.field.required  %}<img src="{{ MEDIA_URL }}images/required.png" alt="required"/>{% endif %}</label></th><td>{{ field }}</td></tr>
+		{% endfor %}
+	</table>
+	<input type="submit" value="Send email" />
+</form>
+
+
+{% endblock %}

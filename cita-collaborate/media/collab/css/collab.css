@@ -1,0 +1,160 @@
+/* Collab CSS Document */
+
+/*
+<!--
+// Version 0.1
+-->
+*/
+
+
+#content input[type=text] {width: 100%;}
+#content textarea {width: 100%; height: 15em;}
+
+h2.invisible {visibility: hidden}
+h2.offscreen {
+	position: absolute;
+	left: -200em;
+	top: -20em;
+}
+
+#ul.plain { list-style-type: square }
+li.plain { list-style-type: none; }
+
+/*#content li.plain { list-style-type: none; }*/
+
+/*li.linear {display: inline; padding: 0 0.3em; background-color: gray;}*/
+ul.linear {display: inline; padding: 0.3em; list-style-type: none; line-height: 3em;}
+
+li.linear {
+    display: inline; 
+    text-decoration: none;
+    background-color: #EEEEEE;
+    color: #333333;
+    padding: 5px 6px 2px 6px;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
+}
+
+
+
+th.form {text-align: right; padding: 0.7em;}
+div.form {width: 75%; float: left; }
+div.markup {float: left; width: 25%; }
+/* #content ul.form { list-style-type: none; } */
+
+li.breadcrumbs {display: inline; padding: 0 0.3em; background-color: AliceBlue }
+ul.breadcrumbs {display: inline; padding: 0.3em; }
+//span.separator {background-color: blue;}
+
+
+#header {
+	background: url() repeat-y right top;
+  background-color: #4BA7E2;
+}
+
+/* SIDENAV FOR LIQUID LAYOUT */
+#sidenav {
+			background: url() repeat;
+			background-color: #edf5fa;
+		}
+		
+#toolbar {
+        background: url() repeat;
+        background-color: #edf5fa;
+}
+
+/*
+#content h2 {
+                color:#027ac6;
+
+}
+*/
+
+#content a:link {
+    color: #027ac6;
+    text-decoration: none;
+}
+
+#content a:visited {
+        color: #027ac6;
+	    text-decoration: none;
+}
+
+
+#content a:hover {
+        color: #0062A0;
+	    text-decoration: underline;
+}
+
+#sidenav a:link {
+        color: #020026;
+}
+
+#sidenav a:visited {
+    color: #020026;
+}
+
+#sidenav a:hover {
+        color: #D56132;
+}
+
+body {
+  color: #494949;
+}
+
+#content h1 {
+                color: #494949;
+}
+
+#content h2 {
+                color: #494949;
+
+}
+
+#content h3 {
+                color: #494949;
+}
+
+
+#content h4 {
+                color: #494949;
+}
+
+#content h5 {
+                color: #494949;
+}
+
+
+hr {
+  background: #5294c1;
+}
+
+#content p {
+                color: #494949;
+}
+
+#content p.delete { text-align: right;}
+
+
+#content a.delete {
+    display: inline; 
+    text-decoration: none;
+    background-color: #EEEEEE;
+    font-size: 85%;
+    text-align: right;
+    padding: 3px 3px; 
+    border-top: 1px solid #111111;
+    border-right: 1px solid #EEEEEE;
+    border-bottom: 1px solid #EEEEEE;
+    border-left: 1px solid #111111;}
+
+#content a.delete:visited {color: #DD0000;}
+
+#content a.delete:link {color: #DD0000;}
+#content a.delete:hover {color: #DD0000;}
+
+#content h2.siteannouncement {color: #884400;}
+#content h2.announcement {color: #AA0000;}
+#content h2.message {color: #007700;}

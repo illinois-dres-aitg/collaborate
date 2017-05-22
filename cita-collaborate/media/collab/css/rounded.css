@@ -1,0 +1,67 @@
+/*Rounded is adapted from Nifty Corners Cube CSS by Alessandro Fulciniti
+The following classes are added dinamically by javascript,
+and their use should be avoided in the markup */
+
+span.rounded {
+  display: block;
+  background-attachment: scroll;
+  background-color: #FFFFFF;
+  background-image: none;
+  background-repeat: repeat;
+  margin: 0px;
+  padding: 0px;
+  border: none;
+}
+
+span.rounded * {
+  display:block;
+  height: 1px;
+  line-height:1px;
+  font-size: 1px;
+  overflow:hidden;
+  border-style:solid;
+  border-width: 0 1px;
+  background-image: url();
+  background-repeat: no-repeat;
+  background-position: right top;
+}
+
+/* Normal size */
+span.line1 {
+  margin: 0 3px;
+}
+span.line2 {
+  margin: 0 2px;
+}
+span.line3 {
+  margin: 0 1px;
+}
+span.line4 { 
+  margin: 0px;
+  height: 2px;
+}
+
+/* Large Size */
+span.rb1{margin: 0 8px;border-width:0 2px}
+span.rb2{margin: 0 6px;border-width:0 2px}
+span.rb3{margin: 0 5px}
+span.rb4{margin: 0 4px}
+span.rb5{margin: 0 3px}
+span.rb6{margin: 0 2px}
+span.rb7{margin: 0 1px;height:2px}
+span.rb8{margin: 0;height:2px}
+span.rs1{margin: 0 1px}
+/*transparent inside*/
+span.t1{border-width: 0 5px}
+span.t2{border-width: 0 3px}
+span.t3{border-width: 0 2px}
+span.t4{height: 2px}
+span.tb1{border-width: 0 10px}
+span.tb2{border-width: 0 8px}
+span.tb3{border-width: 0 6px}
+span.tb4{border-width: 0 5px}
+span.tb5{border-width: 0 4px}
+span.tb6{border-width: 0 3px}
+span.tb7{border-width: 0 2px;height:2px}
+span.tb8{border-width: 0 1px;height:2px}
+span.ts1{border-width: 0 2px}

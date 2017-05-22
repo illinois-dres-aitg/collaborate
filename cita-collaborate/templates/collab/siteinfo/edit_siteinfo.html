@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block head_title %}Modify Site Metadata{% endblock %}
+
+{% block h1 %}Modify Site Metadata{% endblock %}
+
+{% block content %}
+
+<form method=POST action="">
+	<table summary="Form for editing site metadata">
+		{% for field in form %}
+			<tr><th class="form"><label for="id_{{ field.name }}">{{ field.label }} {% if field.field.required  %}<img src="{{ MEDIA_URL }}images/required.png" alt="required"/>{% endif %}</label></th><td>{{ field }}</td></tr>
+			{% if field.field.help_text %}
+				<tr><th></th><td>{{ field.field.help_text }}</td></tr>
+			{% endif %}
+		{% endfor %}
+	</table>
+	<input type="submit" value="Modify metadata" />
+</form>
+
+
+{% endblock %}

@@ -1,0 +1,201 @@
+{% load collab_tags %}
+{% load markup %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us" >
+<head>
+	<title>Athen Collaboration: {% block head_title %}{% endblock %}</title>
+
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	
+ 	<link rel="stylesheet" href="{{ MEDIA_URL }}css/print.css"             type="text/css" media="print" />
+ 	<link rel="stylesheet" href="{{ MEDIA_URL }}css/screen-fluid.css"      type="text/css" media="screen" title="screen" />
+ 	<link rel="stylesheet" href="{{ MEDIA_URL }}css/rounded.css"           type="text/css" media="screen" title="screen" />
+	
+	<link rel="alternative stylesheet" href="{{ MEDIA_URL }}css/print.css" type="text/css" media="screen" title="print"/>
+	<link rel="stylesheet" href="{{ MEDIA_URL }}css/collab.css"      type="text/css" media="screen" title="screen" />
+	
+	
+
+	<script language="javascript" type="text/javascript">
+		var str_path      = "{{ MEDIA_URL }}";
+	</script>
+	
+  	<script type="text/javascript" src="{{ MEDIA_URL }}js/cita_info.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/cita_scripts.js"></script>
+
+ 	<script type="text/javascript" src="{{ MEDIA_URL }}js/cita_sidebar.js"></script>
+ 	
+	<link rel="alternate" type="application/rss+xml" title="iCita teleconferences RSS" href="/feeds/teleconferences/{% block feed %}{% endblock %}">
+
+</head>
+
+<body onload="initCITA()">
+
+<div id="container">
+
+	<div id="header">
+		<div class="cites_logo">
+			<div class="cites"><a href="http://www.athenpro.org/" target="_athenpro">ATHEN Collaboration</a> </div>
+			<div class="cites_expansion"><a href="http://www.cita.uiuc.edu/">Sponsored by the Illinois Center for Information Technology Accessibility</a></div>
+			<div class="uiuc_expansion"><a href="http://www.disability.uiuc.edu">Disability Resources and Educational Services (DRES)</a></div>
+			<div class="uiuc_expansion"><a href="http://www.ahs.uiuc.edu/">College of Applied Health Sciences</a> | <a href="http://www.uiuc.edu/">University of Illinois at Urbana-Champaign</a></div>
+		</div>
+	</div>
+
+ <div id="toolbar">
+
+
+    <div class="printerorscreen">
+
+      <div id="printerstyle">
+        <a id="printst" href="javascript:handleSetView(VIEW_PRINT);">
+        <img src="{{ MEDIA_URL }}images/printer.gif" alt="" width="16" height="16"/>Printer-friendly page</a>
+      </div>
+      <div id="screenstyle">
+        <a id="screenst" href="javascript:handleSetView(VIEW_SCREEN);">
+        <img src="{{ MEDIA_URL }}images/screen.gif" alt="" width="16" height="16"/>Screen-friendly page</a>
+      </div>
+
+    </div>
+
+    <div class="fixedorfluid">
+    </div>
+
+    <div class="font_adjust">
+      <a id="sizexsmall" href="javascript:handleSetFontSize(FONT_SIZE_XSMALL);" title="Font Extra Small">A</a>
+      <a id="sizesmall"  href="javascript:handleSetFontSize(FONT_SIZE_SMALL);"  title="Font Small">A</a>
+      <a id="sizemedium" href="javascript:handleSetFontSize(FONT_SIZE_MEDIUM);" title="Font Medium">A</a>
+
+      <a id="sizelarge"  href="javascript:handleSetFontSize(FONT_SIZE_LARGE);"  title="Font Large">A</a>
+      <a id="sizexlarge" href="javascript:handleSetFontSize(FONT_SIZE_XLARGE);" title="Font Extra Large">A</a>
+    </div>
+  </div>
+
+
+
+	<div id="sidenav"><a name="nav"></a>
+		<div class="sidenav_currentarea">
+			{% block project_menu %}
+			{% endblock %}
+			{% if user.is_authenticated %}
+				<h2>My Groups</h2>
+			{% endif %}
+			<ul>
+				{% for project in user.projects.all %}
+				<li><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></li>
+				{% endfor %}
+			</ul>
+			<h2>Collaborations</h2>
+			<ul>
+				<li><a href="{% url projects %}">Home</a></li>
+				<li><a href="{% url about %}">About Collaborations</a></li>
+				<li><a href="{% url join_leave_projects join_or_leave="join" %}">Join Groups</a></li>
+				{% if user.is_authenticated %}
+					<li><a href="{% url join_leave_projects join_or_leave="leave" %}">Leave Groups</a></li>
+				{% endif %}
+			</ul>
+			{% if user.is_superuser %}
+				<h2>Site Administration</h2>
+				<ul>
+					<li><a href="{% url create_project %}">Add a new group</a></li>				
+					<li><a href="{% url edit_site_info %}">Edit site metadata</a></li>				
+				</ul>
+			{% endif %}
+			<h2>User Account</h2>
+				<ul>
+					{% if user.is_active %}
+						{% if user.profile %}
+							<li><a href="{{ user.profile.all.0.get_absolute_url }}">My Profile</a></li>
+						{% else %}
+							<li><a href="{% url profiles_create_profile %}">Create Profile</a></li>
+						{% endif %}
+						<li><a href="{% url auth_logout %}">Log out: {{ user.username }}</a></li>
+					{% else %}
+						<li><a href="{{ login_url }}">Log in</a></li>
+						<li><a href="{% url registration_register %}">Register</a></li>
+					{% endif %}
+				</ul>
+			
+		</div>
+	</div>
+	
+	<div id="content">
+
+		<div id="breadcrumb">
+			<h2 class="nav">Bread Crumbs</h2>
+			<ul id="sandtrail" title="Bread crumbs">
+				{{ breadcrumbs }}
+			</ul>
+		</div>
+
+		<h1>{% block h1 %}{% endblock %}</h1>
+
+		{% block Messages %}
+			{% if messages or ANONYMOUS_MESSAGE %}
+				<h2 class="message">Messages</h2>
+				{% for message in messages %}
+					<p>{{ message }}</p>
+				{% endfor %}
+				<p>{{ ANONYMOUS_MESSAGE|default:"" }}</p>
+			{% endif %}
+		{% endblock %}
+		
+		{% block Announcements %}
+			{% if site_announcements %}
+				<h2 class="siteannouncement">Site Announcements</h2>
+				{{ site_announcements|textile }}
+			{% endif %}
+		{% endblock %}
+
+		{% block operations %}
+		{% endblock %}
+
+
+		
+		{% block formerrors %}
+			{% if form.errors %}
+				<h3>Error! Invalid form fields:</h3>
+				<ul>
+				{% for error_field, error_desc in form.errors.iteritems %}
+					<li><a href="javascript:document.getElementById('id_{{ error_field }}').focus()">{{ form.fields|getlabel:error_field }}: {{ error_desc }}</a></li>
+				{% endfor %}
+				</ul>
+			{% endif %}
+		{% endblock %}
+		
+		{% block content %}
+		{% endblock %}
+		
+	
+	</div>
+</div>
+
+<div id="footer">
+
+     
+     <div class="contact_us_link">
+     </div>
+    
+     
+    <div class="fae_link">
+       <a href="https://fae.cita.uiuc.edu/">Check Accessibility with FAE</a>
+    </div>
+    
+    <div class="fae_link">
+       <a href="http://validator.w3.org/check/referer">Check xhtml validation with W3C Validator</a>
+    </div>
+    
+    <div class="copyright_statement">
+
+        &copy {{ copyright_year }}
+    </div>
+    
+  </div>
+  <!-- END footer div -->
+  
+</div>
+
+
+
+</body>
+</html>

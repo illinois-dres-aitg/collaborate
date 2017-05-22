@@ -1,0 +1,32 @@
+{% extends "project/operationsbase.html" %}
+{% load markup %}
+{% load project_tags %}
+
+{% block head_title %}{{ block.super }} Role Management{% endblock %}
+
+{% block h1 %}{{ block.super }} Role Management{% endblock %}
+
+{% block content %}
+
+
+{% if user.id|is_project_admin:project.slug or user.is_superuser %}
+	<h2 class="offscreen">Operations</h2>
+	<ul class="linear">
+		<li class="linear"><a href="{% url role_add project.slug %}">Create new role</a></li>
+		<li class="linear"><a href="{% url role_add_remove project_name=project.slug,add_or_remove="addtoroles" %}">Bulk add users to roles</a></li> 
+		<li class="linear"><a href="{% url role_add_remove project_name=project.slug,add_or_remove="removefromroles" %}">Bulk remove users from roles</a></li> 
+	</ul>
+	<h2>Roles</h2>
+	{% if project.roles %}
+		<ul>
+			{% for role in project.roles.all %}
+				<li>{{ role.name }} <a href="{% url role_edit project_name=project.slug,role_id=role.id %}">Modify {{ role.name }}</a></li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<p>No roles have been defined!</p>
+	{% endif %}
+	<p>The default role for this group is <b>{{ project.default_role.name }}</b>. All new users will be added to this role. </p>
+{% endif %}
+
+{% endblock %}

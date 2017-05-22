@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block head_title %}{{ block.super }}Create New Collaboration Group{% endblock %}
+
+
+{% block h1 %}{{ block.super }}Create New Collaboration Group{% endblock %}
+
+{% block content %}
+
+<script type="text/javascript" src="/media/js/urlify.js"></script>
+
+
+<div class="form">
+<form method=POST action="">
+	<table summary="Form for creating a new group">
+		{% for field in form %}
+			<tr><th class="form"><label for="id_{{ field.name }}">{{ field.label }} {% if field.field.required  %}<img src="{{ MEDIA_URL }}images/required.png" alt="required"/>{% endif %}</label></th><td>{{ field }}</td></tr>
+			{% if field.field.help_text %}
+				<tr><th></th><td>{{ field.field.help_text }}</td></tr>
+			{% endif %}
+		{% endfor %}
+	</table>
+	<input type="submit" value="Create new group" />
+</form>
+</div>
+{% include 'markup.html' %}
+
+
+
+
+   <script type="text/javascript">document.getElementById("id_name").focus();</script>
+
+
+
+
+<script type="text/javascript">
+
+    document.getElementById("id_slug").onchange = function() { this._changed = true; };
+    
+    document.getElementById("id_name").onkeyup = function() {
+        var e = document.getElementById("id_slug");
+        if (!e._changed) { e.value = URLify(document.getElementById("id_name").value, 50); }
+    }
+    
+
+</script>
+
+
+
+{% endblock %}

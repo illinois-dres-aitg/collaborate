@@ -1,0 +1,599 @@
+/* CSS Document */
+
+/*
+<!-- 
+// Version 1.0
+// last edited 8/11 by DSJ
+-->
+*/
+
+
+body {
+	margin: 0px;
+	padding: 0px;
+  font-size: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+	color: black;
+}
+
+
+#container {
+  position: relative;
+	padding: 0;
+	margin: 5px; 
+	width: 100%;
+	background-color: white; 
+	font-size: 100%; 
+}
+
+div.codebox{
+  font-family: monospace;
+  border: black solid 2px;
+  margin: .5em;
+  padding: .5em;
+  font-size: medium;
+}
+
+
+
+/* ----------- BEGIN header styles --------------*/
+
+#header {
+  margin: 0;
+  padding: 0;
+	color: black;
+	font-family: 'Gill Sans MT', 'Gill Sans', Arial, Helvetica, sans-serif;
+	width: 100%;
+	line-height: 1em;
+}
+
+.cites_logo {
+	padding-left: 8px;
+}
+
+.cites_logo img {
+  margin: 0;
+	padding: 0;
+	border: none;
+  position: absolute;
+	top: .3em;
+	left: 4px;
+}
+
+.cites {
+  margin: 0;
+	padding: 0;
+	line-height: 0.7em;
+	font-size: 1.3em;
+	letter-spacing: 0.3em;
+	margin-top: .5em;
+	margin-left: 25px;
+	padding-left: 20px;
+	padding-bottom: .25em;
+	border-bottom: 1px solid gray;
+}
+
+.cites_expansion {
+  margin: 0;
+	padding: 0;
+  margin-left: 45px;
+	font-size: 0.9em;
+	font-weight: bold;
+	line-height: 1.2em;
+	white-space: nowrap;
+}
+
+.uiuc_expansion {
+  margin: 0;
+	padding: 0;
+  margin-left: 45px;
+	font-size: 0.7em;
+	line-height: 1.2em;
+	white-space: nowrap;
+}
+
+.toplinks {
+	position: absolute;
+	top: 0.8em;
+	right: 1em;
+	margin: 0 0 0 0;
+	padding: 0;
+	width: 48%;
+	float: right;
+	font-size: 0.7em;
+	text-align: right;
+}
+
+.cites_logo a:link,
+.cites_logo a:visited {
+  color: black;
+  text-decoration: none;
+}
+
+
+/* ----------- END header styles ----------------*/
+
+
+/* ----------- BEGIN toolbar styles --------------*/
+
+
+#toolbar {
+	float: right; 
+	margin: 20px 40px 0 0;
+	text-align: right;
+}
+
+#toolbar img {
+	border: none;
+}
+
+#toolbar .unselected {
+	text-decoration: none;
+}
+
+#toolbar a:link, #toolbar a:visited {
+  color: #3F3F72;
+}
+
+#toolbar a:hover { 
+	color: #D56132;
+}
+
+#toolbar .printerorscreen {
+	margin: 0;
+  padding: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 0.8em;
+	text-decoration: none;
+}
+
+#toolbar .printerorscreen a {
+  padding: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 0.8em;
+	text-decoration: none;
+}
+
+#toolbar .printerorscreen img {
+  padding: 0 6px 0 0;
+	vertical-align: middle;
+}
+
+#toolbar .printerorscreen #screenstyle {
+  margin-right: .5em;
+  text-align: right;	
+  display: block;
+}
+
+#toolbar .printerorscreen #printstyle {
+    display: none;
+}
+
+#toolbar .fixedorfluid {
+	display: none;
+}
+
+
+#toolbar .font_adjust {
+	display: none;
+}
+
+
+/* ----------- END toolbar styles --------------*/
+
+
+
+/* ----------- BEGIN content styles --------------*/
+
+
+#content {
+	clear: both;
+/*	float: left; */
+	margin: 0 0 0 0px;
+	padding: 10px 0 10px 1em;
+	width: 95%; 
+	background-color: #FFF;
+}
+
+
+#content h1 {
+        margin: 0 0 0.7em 0;
+		font-weight: normal;
+		font-size: 1.4em; 
+		color: #000; 
+		font-variant: small-caps;		
+}
+
+#content h2 {
+		margin: 0 0 0.3em 0;
+        padding: 1em 0 0.3em;
+		font-size: 0.9em; 
+		font-weight: bold;
+		color:#333; 
+		border-bottom: solid #4C56A6 1px;
+		font-variant: small-caps;		
+
+}
+
+#content h3 {
+        margin: 0;
+        padding: 1em 0 0.3em;
+		font-weight: bold;
+		font-size: 0.8em; 
+		color:#333; 
+		line-height: 1em;
+}
+
+#content .byline {
+        margin: 0;
+        padding: 0 0 1.5em;
+		font-weight: bold;
+		font-size: 0.8em; 
+		color:#333; 
+		line-height: 1em;
+}
+
+#content p {
+		margin: 0;
+		padding: 0 1em 0.3em;
+		font-weight: normal;
+		font-size: 0.8em; 
+		line-height: 1.4em;
+		color:#000000; 
+}
+
+#content img {
+	padding: 0.5em;
+}
+
+#content ul {
+	padding-top: 0;
+	margin-top: 0;
+    list-style-type: circle;
+	font-weight: normal;
+	color:#000; 
+}
+
+#content ol {
+	padding-top: 0;
+	margin-top: 0;
+	font-weight: normal;
+	color:#000; 
+}
+
+#content li {
+	padding-bottom: 6px;
+	font-size: 0.8em; 
+	line-height: 1.4em
+}
+
+#content blockquote {
+	margin: 0;
+	padding: 0 3em 1.2em;
+	font-weight: normal;
+	font-size: 0.75em; 
+	line-height: 1.4em;
+	color:#000000; 
+	font-style: italic;
+}
+
+#content .pullquote {
+	margin: 0.5em auto 1em;
+	padding: 1em;
+	width: 75%;
+	border: solid 1px gray;
+	font-size: 0.9em;
+	background-color: #DDD;
+}
+
+#content .left {
+	float: none;
+}
+
+#content .right {
+	float: none;
+}
+
+#content a:link { 
+    color: #4C56A6;
+	text-decoration: none;
+}
+
+#content a:visited { 
+	color: gray;
+	text-decoration: none;
+}
+
+#content a:hover { 
+	color: #D56132;
+	text-decoration: none;
+}
+
+#content table {
+
+}
+
+#content th {
+
+}
+
+#content td {
+
+}
+
+
+#content .simple_table table {
+	margin: 20px auto;
+	border: solid gray 2px;
+	width: 100%;
+	border-collapse: collapse;
+}
+
+#content .simple_table th {
+	font-weight: normal;
+	font-style:italic;
+	vertical-align: bottom;
+	background-color: #F6FAFE;
+	padding: 5px;
+	font-size: 0.7em;
+}
+
+#content .simple_table td {
+	margin: 0;
+	padding: 4px;
+	font-weight: normal;
+	vertical-align: top;
+	background-color: white;
+	font-size: 0.8em;
+	border: solid gray 2px;
+}
+
+#content .simple_table li {
+	padding-bottom: 6px;
+	font-size: 1em; 
+	line-height: 1.4em
+}
+
+table.rules caption {
+  position: absolute;
+  left: -200em;
+  top: -20em;
+  }
+
+table.rules td,
+table.rules th
+{
+  padding: .25em;
+}
+
+table.rules td.report {
+  text-align: center;
+}
+
+table.rules span.pass {
+  color: green;
+}
+
+table.rules span.fail {
+  color: red;
+}
+
+table.rules span.warning {
+  color: #A04000;
+}
+
+table.rules span.todo {
+  color: #0040A0;
+}
+
+
+
+
+/* ----------- END content styles --------------*/
+
+
+
+/* ----------- BEGIN pagenav styles --------------*/
+
+/* give some space to the left side of pagenav, even though it floats */
+#pagenavcontainer {
+	padding-left: 3px;
+	margin: 0;
+	float: right;   
+	background: #FFF; 
+	display: inline;
+}
+
+
+#pagenav {
+	margin: 10px 0 0 20px;
+	padding: 15px;
+	width: 9em;
+	border: inset 1px black;
+}
+
+#pagenav h2 {
+	margin: 0 0 8px 0;
+	padding: 0;
+	font-weight: normal;
+	font-size: 0.8em; 
+	color: black;
+	font-variant: small-caps;		
+}
+
+#pagenav ul {
+    margin: 0px 5px 8px;
+    padding: 0;
+    list-style-type: none;
+	font-size: 0.9em; 
+	color:#900; 
+	line-height: 1em;     
+}
+
+#pagenav li {
+    padding: 0 0 5px 0;
+    text-indent: -10px;
+    padding-left: 10px;
+    list-style-type: none;
+}
+
+#pagenav img {
+	display: block;
+	width: auto;
+	margin: 10px auto;
+	padding: 0;
+}
+
+#pagenav a:link { 
+    color: #3F3F72;
+	text-decoration: none;
+}
+
+#pagenav a:visited { 
+	color: #3F3F72;
+	text-decoration: none;
+}
+
+#pagenav a:hover { 
+	color: #D56132;
+	text-decoration: underline;
+}
+
+
+/* ----------- END pagenav styles --------------*/
+
+
+
+
+/* ----------- BEGIN breadcrumb styles --------------*/
+
+#breadcrumb {
+	margin: 0 0 5px 0;
+	padding: 0;
+	font-size: 0.9em;
+	color:black; 
+}
+
+#breadcrumb h2 {
+	position: absolute;
+	top: -20em;
+	left: -200em;
+}
+
+#breadcrumb ul, #breadcrumb li {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	display: inline;
+}
+
+#breadcrumb li {
+	background: url(http://www.cites.uiuc.edu/webmod/images/breadcrumb_arrow.gif) no-repeat left top;
+	padding-left: 1.2em;
+}
+
+#breadcrumb .first_item {
+	background-image: none;
+	padding: 0;
+	margin: 0;
+}
+
+
+#breadcrumb a:link {
+    color: #3F3F72;
+	text-decoration: none;
+}
+
+#breadcrumb a:visited { 
+	color: #3F3F72;
+	text-decoration: none;
+}
+
+#breadcrumb a:hover { 
+	color: #D56132;
+	text-decoration: underline;
+}
+
+/* ----------- END breadcrumb styles --------------*/
+
+
+
+
+
+
+/* ----------- BEGIN sidenav styles --------------*/
+
+
+
+#sidenav {
+	display: none;
+}
+
+/* ----------- END sidenav styles --------------*/
+
+
+/* ----------- BEGIN footer styles --------------*/
+
+#footer {
+/*	float: left; */
+	border-top: double #4C56A6 1px;
+	margin: 50px 0 1em 1em;
+	padding: 3px 0 0 0;
+	width: 100%;
+}
+
+#footer a:link {
+	color: #4C56A6;
+    text-decoration: none;
+}
+
+#footer a:visited {
+    color: #999;
+    text-decoration: none;
+}
+
+#footer a:hover { 
+	color: #D56132;
+	text-decoration: none;
+}
+
+
+#footer .contact_us_link {
+	display: none;
+}
+
+#footer .rss_link {
+	display: none;
+}
+
+#footer .last_modified_date {
+	font-size: 0.6em;
+	text-align: center;
+}
+
+#footer .fae_link {
+	display: none;
+}
+
+
+
+#footer .copyright_statement {
+	padding-top: 0.5em;
+	font-size: 0.6em;
+	text-align: center;
+}
+
+#footer .privacy_notice {
+	display: none;
+}
+
+#footer .accessibility_statement {
+	display: none;
+}
+
+#footer .to_top {
+	display: none;
+}
+
+
+/* ----------- END footer styles --------------*/

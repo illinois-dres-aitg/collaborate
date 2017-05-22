@@ -1,0 +1,16 @@
+{% extends "registration/base.html" %}
+
+{% block head_title %}{{ block.super }}Account activation{% endblock %}
+
+{% block h1 %}{{ block.super }}Account activation{% endblock %}
+
+{% block content %}
+
+{% if account %}
+<p>Your account has been validated! You may now <a href="{% url join_leave_projects join_or_leave="join" %}">join</a> some <a href="{% url projects %}">groups</a>.
+{% else %}
+<p>The activation key you entered is invalid.</p>
+{% endif %}
+
+
+{% endblock %}

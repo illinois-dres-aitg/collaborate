@@ -1,0 +1,64 @@
+{% extends "action/base.html" %}
+{% load markup %}
+
+{% block head_title %}{{ block.super }}Overview{% endblock %}
+
+{% block h1 %}{{ block.super }}Overview{% endblock %}
+
+
+{% block content %}
+
+{% if editable %}
+<h2 class="offscreen">Operations</h2>
+<ul class="linear">
+	<li class="linear"><a href="{% url action_add project.slug %}">Add an action item</a></li>
+</ul>
+	
+
+{% endif %}						
+
+
+<h2>Open action items {% if open_action_items_list %}({{ open_action_items_list|length }}){% endif %}</h2>
+
+{% if open_action_items_list %}
+	<ol>
+		{% for action in open_action_items_list %}
+			<li>
+				<a href="{{ action.get_absolute_url }}">{{ action.action }}, {{ action.owner }}, {{ action.deadline|date:"D d M Y" }}</a>
+	 		</li>
+		{% endfor %}
+	</ol>
+{% else %}
+	<p>There are no open action items.</p>
+{% endif %}
+
+<h2>Closed action items</h2>
+
+{% if closed_action_items %}
+	<ol>
+		{% for action in closed_action_items %}
+			<li>
+				<a href="{{ action.get_absolute_url }}">{{ action.action }}, {{ action.owner }}, {{ action.deadline|date:"D d M Y" }}</a>
+	 		</li>
+		{% endfor %}
+	</ol>
+{% else %}
+	<p>There are no closed action items.</p>
+{% endif %}
+
+<h2>Canceled action items</h2>
+
+{% if canceled_action_items %}
+	<ol>
+		{% for action in canceled_action_items %}
+			<li>
+				<a href="{{ action.get_absolute_url }}">{{ action.action }}, {{ action.owner }}, {{ action.deadline|date:"D d M Y" }}</a>
+	 		</li>
+		{% endfor %}
+	</ol>
+{% else %}
+	<p>There are no canceled action items.</p>
+{% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load markup %}
+
+{% block head_title %}Collaboration Groups{% endblock %}
+
+{% block h1 %}Collaboration Groups{% endblock %}
+
+{% block content %}
+
+
+<h2>Upcoming Teleconferences</h2>
+
+{% if teleconferences %}
+	<ul>
+	{% for conference in teleconferences %}
+		<li><a href="{{ conference.get_absolute_url }}">{{ conference.project }} on {{ conference.time|date:"D d M Y, \a\t"}}
+		{% if time_zone %} 
+			{% for tz, time in conference.return_times %}
+				{% ifequal tz time_zone %}
+					{{ time|date:" f A" }} ({{ tz }})</a></li>
+				{% endifequal %}
+			{% endfor %}
+		{% else %}
+			{% for tz, time in conference.return_times %}{{ time|date:" f A" }} ({{ time.tzinfo }}) {% endfor %}</a></li>
+		{% endif %}
+ 	{% endfor %}	
+	</ul>
+	<p><a href="{% url global_teleconferences  %}">See all the teleconferences.</a></p>
+{% else %}
+	There are no scheduled teleconferences for the next week.
+{% endif %}
+
+{% if privileges.TeleEdit %}
+	<ul class="linear">
+		<li class="linear"><a href="{% url tele_add project_name=project.slug %}">Add a teleconference</a></li>
+	</ul>
+{% endif %}
+
+
+{% if user.projects %}
+	<h2>Groups I Am A Member Of</h2>
+	<ul>
+	{% for project in user.projects.all %}
+		<li><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></li> 
+	{% endfor %}
+	</ul>
+{% endif %}
+
+{% if projects_list %}
+	<h2>Collaboration Groups</h2>
+	<ul>
+	{% for project in projects_list %}
+		<li><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></li> 
+	{% endfor %}
+	</ul>
+{% else %}
+	<p> There are no groups!</p>
+{% endif %}
+
+{% endblock %}
+

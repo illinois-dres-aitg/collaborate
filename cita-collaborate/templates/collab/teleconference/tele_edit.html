@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Modify Teleconference</h2>
+	<table>
+		<tr><td>Time</td><td>{{ teleconference.time|date:"D, d M Y, \a\t f A" }}</td></tr>
+		<tr><td>Agenda</td><td>{{ teleconference.agenda }}</td></tr>
+		{% if teleconference.location %}
+			<tr><td>Location</td><td>{{ teleconference.location }}</td></tr>
+		{% endif %}
+		{% if teleconference.phone %}
+			<tr><td>phone</td><td>{{ teleconference.phone }}</td></tr>
+		{% endif %}
+		{% if teleconference.phone_code %}
+			<tr><td>Phone code</td><td>{{ teleconference.phone_code }}</td></tr>
+		{% endif %}
+		{% if teleconference.online_uri %}
+			<tr><td>Online URL</td><td>{{ teleconference.online_uri }}</td></tr>
+		{% endif %}
+		{% if teleconference.online_userid %}
+			<tr><td>Online userid</td><td>{{ teleconference.online_userid }}</td></tr>
+		{% endif %}
+		{% if teleconference.online_password %}
+			<tr><td>Online Password</td><td>{{ teleconference.online_password }}</td></tr>
+		{% endif %}
+		{% if teleconference.online_instructions %}
+			<tr><td>Online Instructions</td><td>{{ teleconference.online_instructions }}</td></tr>
+		{% endif %}
+		{% if teleconference.other_instructions %}
+			<tr><td>Other instructions</td><td>{{ teleconference.other_instructions }}</td></tr>
+		{% endif %}
+		{% if teleconference.notes %}
+			<tr><td>Notes</td><td>{{ teleconference.notes }}</td></tr>
+		{% endif %}
+		{% if teleconference.minutes %}
+			<tr><td>Minutes</td><td>{{ teleconference.minutes }}</td></tr>
+		{% else %}
+			<tr><td>Minutes</td><td>Coming soon!</td></tr>
+		{% endif %}
+		<tr><td>Participants</td><td><ul>{% for participant in teleconference.participants.all %}<li>{{ participant.username }}</li>{% endfor %}</ul></td></tr>
+	</table>
+
+
+
+{% endblock %}

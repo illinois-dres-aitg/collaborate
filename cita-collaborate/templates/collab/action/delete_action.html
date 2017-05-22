@@ -1,0 +1,17 @@
+{% extends "action/base.html" %}
+
+{% block head_title %}{{ block.super }}Delete{% endblock %}
+
+{% block h1 %}{{ block.super }}Delete{% endblock %}
+
+{% block content %}
+
+<form method="POST" action=".">
+<p>Are you sure you want to delete this action item?</p>
+<input type="submit" value="Yes, I'm sure!"/>
+</form>
+
+<p>Press your browser's back button if you have changed your mind.</p>
+
+
+{% endblock %}

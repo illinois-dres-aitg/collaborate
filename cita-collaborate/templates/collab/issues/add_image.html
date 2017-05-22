@@ -1,0 +1,27 @@
+{% extends "issues/issue_base.html" %}
+
+{% block head_title %}{{ block.super }}{{ issue.title }} Upload image{% endblock %}
+
+{% block h1 %}{{ block.super }}{{ issue.title }} Upload image{% endblock %}
+
+{% block content %}
+
+<h2>Add an Image</h2>
+
+<div class="form">
+<form method=POST enctype="multipart/form-data" action="">
+	<table summary="Form for uploading an image">
+		{% for field in form %}
+			<tr><th class="form"><label for="id_{{ field.name }}">{{ field.label }} {% if field.field.required  %}<img src="{{ MEDIA_URL }}images/required.png" alt="required"/>{% endif %}</label></th><td>{{ field }}</td></tr>
+			{% if field.field.help_text %}
+				<tr><th></th><td>{{ field.field.help_text }}</td></tr>
+			{% endif %}
+		{% endfor %}
+	</table>
+	<input type="submit" name="Submit" value="Upload image" />
+</form>
+</div>
+
+
+
+{% endblock %}

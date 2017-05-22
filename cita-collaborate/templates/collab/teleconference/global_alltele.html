@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block head_title %}{{ block.super }}All Upcoming Teleconferences.{% endblock %}
+
+{% block h1 %}{{ block.super }}All Upcoming Teleconferences{% endblock %}
+
+{% block content %}
+
+
+
+
+{% if upcoming_tele_list %}
+	<ul>
+	{% for teleconference in upcoming_tele_list %}
+		<li><a href="{{ teleconference.get_absolute_url }}">{{ teleconference.project }} on {{teleconference.time|date:"D d M Y, \a\t"}}
+			{% if time_zone %}
+				{% for tz, time in teleconference.return_times %}
+					{% ifequal tz time_zone %}
+						{{ time|date:" f A" }} ({{ tz }})</a></li>
+					{% endifequal %}
+				{% endfor %}
+			{% else %}
+				{% for tz, time in teleconference.return_times %}{{ time|date:" f A" }} ({{ time.tzinfo }}) {% endfor %}</a></li>
+			{% endif %}
+	{% endfor %}
+	</ul>
+{% else %}
+	<p> There are no upcoming teleconferences!</p>
+{% endif %}
+
+{% endblock %}
+

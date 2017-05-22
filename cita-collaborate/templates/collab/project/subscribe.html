@@ -1,0 +1,18 @@
+{% extends "project/base.html" %}
+
+{% block head_title %}{{ block.super }}: Join{% endblock %}
+
+
+{% block h1 %}{{ block.super }} - Join{% endblock %}
+
+{% block content %}
+
+<p>Are you sure you want to join {{ project.name }}?</p>
+
+<form method=POST action="">
+	<input type="submit" name="Yes" value="Yes, I want to join {{ project.name }}" />
+	<input type="submit" name="No" value="No, I changed my mind." />
+</form>
+
+
+{% endblock %}

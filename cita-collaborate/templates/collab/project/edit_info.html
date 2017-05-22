@@ -1,0 +1,27 @@
+{% extends "project/base.html" %}
+
+{% block head_title %}{{ block.super }}: Modify {{ project.name }} information{% endblock %}
+
+
+{% block h1 %}{{ block.super }} - Modify {{ project.name }} information{% endblock %}
+
+{% block content %}
+
+<div class="form">
+<form method=POST action="">
+	<input type="submit" value="Modify {{ project.name }} information" />
+	<table summary="Form for editing group information">
+		{% for field in form %}
+			{% if field.field.help_text %}
+				<tr><th></th><td>{{ field.field.help_text }}</td></tr>
+			{% endif %}
+			<tr><th class="form"><label for="id_{{ field.name }}">{{ field.label }} {% if field.field.required  %}<img src="{{ MEDIA_URL }}images/required.png" alt="required"/>{% endif %}</label></th><td>{{ field }}</td></tr>
+		{% endfor %}
+	</table>
+	<input type="submit" value="Modify {{ project.name }} information" />
+</form>
+</div>
+{% include 'markup.html' %}
+
+
+{% endblock %}

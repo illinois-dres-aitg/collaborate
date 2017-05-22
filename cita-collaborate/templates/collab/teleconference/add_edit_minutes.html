@@ -1,0 +1,26 @@
+{% extends "teleconference/editbase.html" %}
+
+{% block head_title %}{{ block.super }}Update Minutes{% endblock %}
+
+{% block h1 %}{{ block.super }}Update Minutes{% endblock %}
+
+{% block content %}
+
+<h2>Update minutes</h2>
+
+
+<form method=POST action="">
+	<input type="submit" value="Update minutes"/>
+	<table summary="Update minutes">
+		{% for field in form %}
+			<tr><th><br><label for="id_{{ field.name }}">{{ field.label }} {% if field.field.required  %}<img src="{{ MEDIA_URL }}images/required.png" alt="required"/>{% endif %}</label></th><td>{{ field }}</td></tr>
+			{% if field.field.help_text %}
+				<tr><th></th><td>{{ field.field.help_text }}</td></tr>
+			{% endif %}
+		{% endfor %}
+	</table>
+	<input type="submit" value="Update minutes"/>
+</form>
+
+
+{% endblock %}

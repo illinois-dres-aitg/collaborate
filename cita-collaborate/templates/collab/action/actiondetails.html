@@ -1,0 +1,40 @@
+{% extends "action/base.html" %}
+{% load markup %}
+
+{% block head_title %}{{ block.super }}Details{% endblock %}
+
+{% block h1 %}{{ block.super }}Details{% endblock %}
+
+{% block content %}
+
+{% if deletable %}
+<h2 class="offscreen">Operations</h2>
+<ul class="linear">
+	<li class="linear"><a href="{% url action_edit project.slug,action.id  %}">Modify this action item</a></li>
+	<li class="linear"><a href="{% url action_add project.slug %}">Add a new action item</a></li>
+</ul>
+
+{% endif %}
+
+
+<h2>Details</h2>
+	<table summary="Details of an action item">
+		<tr><td>Status</td><td>{{ action.status }}</td></tr>
+		<tr><td>Assigned To</td><td>{{ action.owner.first_name }} {{ action.owner.last_name }}</td></tr>
+		<tr><td>Date Assigned</td><td>{{ action.date_assigned }}</td></tr>
+		<tr><td>Deadline</td><td>{{ action.deadline }}</td></tr>
+		<tr><td>Action summary</td><td>{{ action.action|textile }}</td></tr>
+		{% if action.url_desc %}
+			<tr><td>Supporting URL</td><td><a href="{{ action.url_desc }}" target="_blank">{{ action.url_desc }}</a></td></tr>
+		{% endif %}
+		{% if action.url_complete %}
+			<tr><td>URL indicating action completed</td><td><a href="{{ action.url_complete }}" target="_blank">{{ action.url_complete }}</a></td></tr>
+		{% endif %}
+		{% if action.notes %}
+			<tr><td>Notes</td><td>{{ action.notes|textile }}</td></tr>
+		{% endif %}
+		<tr><td>Last Updated</td><td>{{ action.last_updated }}</td></tr>
+	</table>
+
+
+{% endblock %}

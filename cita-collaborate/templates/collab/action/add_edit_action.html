@@ -1,0 +1,39 @@
+{% extends "action/editbase.html" %}
+{% load collab_tags %}
+{% block head_title %}{{ block.super }}{% if edit %}Modify{% else %}Add{% endif %} action item{% endblock %}
+
+{% block h1 %}{{ block.super }}{% if edit %}Modify{% else %}Add{% endif %} action item{% endblock %}
+
+
+
+{% block content %}
+
+
+
+{% if edit %}
+	<p class="delete"><A class="delete" href="{% url action_delete project.slug,action.id %}">Delete this action item</a>
+{% endif %}
+
+
+<h2>{% if edit %}Modify an{% else %}Add an{% endif %} action item</h2>
+
+
+<div class="form">
+<form method=POST action="">
+	<input type="submit" value="{% if edit %}Modify{% else %}Add{% endif %} action item" />
+	<table summary="Form for editing an action item">
+		{% for field in form %}
+			<tr><th class="form"><label for="id_{{ field.name }}">{{ field.label }} {% if field.field.required  %}<img src="{{ MEDIA_URL }}images/required.png" alt="required"/>{% endif %}</label></th><td>{{ field }}</td></tr>
+			{% if field.field.help_text %}
+				<tr><th></th><td>{{ field.field.help_text }}</td></tr>
+			{% endif %}
+		{% endfor %}
+	</table>
+	<input type="submit" value="{% if edit %}Modify{% else %}Add{% endif %} action item" />
+</form>
+</div>
+{% include 'markup.html' %}
+
+
+
+{% endblock %}

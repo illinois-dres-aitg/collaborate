@@ -1,0 +1,50 @@
+{% extends "issues/base.html" %}
+{% load markup %}
+
+{% block head_title %}{{ block.super }}{{ issueset.name }}{% endblock %}
+
+{% block h1 %}{{ block.super }}{{ issueset.name }}{% endblock %}
+
+{% block content %}
+
+<h2 class="offscreen">Operations</h2>
+<ul class="linear">
+{% if new_issue_perm or deletable %}
+	{% if new_issue_perm %}
+		<li class="linear"><a href="{% url issue_add project.slug,issueset.id %}">Add an issue</a></li>
+	{% endif %}
+	{% if deletable %}
+		<li class="linear"><a href="{% url issueset_edit project.slug,issueset.id %}">Modify this issue list</a></li>
+	{% endif %}
+{% endif %}
+	<li class="linear"><a href="{% url issues_latest project_name=project.slug %}">Recently updated issues in this list</a></li>
+
+</ul>
+<hr>
+
+
+
+<ul>
+	<li>Name: {{ issueset.name }}</li>
+	<li>Active: {{ issueset.active|yesno:"True,False" }}</li>
+</ul>
+
+<h2>Issues</h2>
+{% if list_of_issues %}
+	{% regroup list_of_issues by status as status_list %}
+
+	{% for status in status_list %}
+		<h3>{{ status.grouper }}</h3>
+			<ul>
+			{% for issue in status.list %}
+				<li class="plain"><a href="{{ issue.url }}">{{ issue.number }}. {{ issue.title }}</a> - Last modified {{ issue.last_modified|date:"d M, Y \a\t H:i" }} (Central)</li>	
+			{% endfor %}
+			</ul>
+	{% endfor %}
+{% else %}
+	<p>No issues have been reported!</p>
+{% endif %}
+
+
+
+{% endblock %}

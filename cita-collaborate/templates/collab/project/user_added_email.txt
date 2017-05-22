@@ -1,0 +1,10 @@
+Hello,
+
+{% if not user %}You have{% else %}{{ user.first_name }} {{ user.last_name }} has{% endif %} now been added to {{ project.name }}!
+
+{% if not user %}
+You can visit it at:
+
+http://{{ SITE_URL }}{{ project.get_absolute_url }}
+{% endif %}
+

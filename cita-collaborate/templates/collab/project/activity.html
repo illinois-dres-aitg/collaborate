@@ -1,0 +1,13 @@
+{% extends "project/bulk.html" %}
+
+{% block head_title %}{{ block.super }}: {% ifequal task "activate" %}Activate users.{% else %}Deactivate users.{% endifequal %}{% endblock %}
+
+{% block h1 %}{{ block.super }}: {% ifequal task "activate" %}Activate users.{% else %}Deactivate users.{% endifequal %}{% endblock %}
+
+
+{% block h2 %}{% ifequal task "activate" %}Activate users in {% else %}Deactivate users in {% endifequal %}{{ project.name }}{% endblock %}
+
+{% block tablesummary %}{% ifequal task "activate" %}Activating in {% else %}Deactivating in{% endifequal %} {{ project.name }}{% endblock %}
+{% block submitvalue %}{% ifequal task "activate" %}Activating users in {% else %}Deactivating users in {% endifequal %}{{ project.name }}{% endblock %}
+
+

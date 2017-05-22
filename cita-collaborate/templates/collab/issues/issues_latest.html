@@ -1,0 +1,42 @@
+{% extends "issues/base.html" %}
+{% load markup %}
+
+{% block head_title %}{{ block.super }}Latest Issues{% endblock %}
+
+{% block h1 %}{{ block.super }}Latest Issues{% endblock %}
+
+{% block content %}
+
+<h2>Latest Issues</h2>
+{% if issues_list %}
+	<ul>
+	{% for issue in issues_list %}
+		<li class="plain"><a href="{{ issue.get_absolute_url }}">{{ issue.number }}. {{ issue.title }}</a> - <b>{{ issue.status }}</b> - Last modified {{ issue.updated_date|date:"d M, Y \a\t H:i" }} (Central)</li>	
+	{% endfor %}
+	</ul>
+{% else %}
+	<p>No issues have been reported!</p>
+{% endif %}
+
+{% if is_paginated %}
+
+	<p>Pages:
+	{% if page_obj.has_previous %}
+		<a href="{% url issues_latest project_name=project.slug %}?page={{ page_obj.previous_page_number }}">Previous</a>
+	{% endif %}
+	 
+	{% for p in page_range %}
+		{% ifequal p page_obj.number %}
+			{{ p }}
+		{% else %}
+			<a href="{% url issues_latest project_name=project.slug %}?page={{ p }}">{{ p }}</a>
+		{% endifequal %}
+	{% endfor %}
+	{% if page_obj.has_next %}
+		<a href="{% url issues_latest project_name=project.slug %}?page={{ page_obj.next_page_number }}">Next</a>
+	{% endif %}
+	
+
+{% endif %}
+
+{% endblock %}

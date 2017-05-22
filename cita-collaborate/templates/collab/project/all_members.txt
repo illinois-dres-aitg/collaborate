@@ -1,0 +1,2 @@
+{% for member in members %}{{ member.0 }} {{ member.1 }} {{ member.2 }}
+{% endfor %}

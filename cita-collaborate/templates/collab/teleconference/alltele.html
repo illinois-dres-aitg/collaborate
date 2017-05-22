@@ -1,0 +1,104 @@
+{% extends "teleconference/base.html" %}
+{% load markup %}
+
+{% block head_title %}{{ block.super }}Teleconferences{% endblock %}
+
+{% block h1 %}{{ block.super }}Teleconferences{% endblock %}
+
+{% block content %}
+
+{% if editable %}
+<h2 class="offscreen">Operations</h2>
+<ul class="linear">
+	<li class="linear"><a href="{% url tele_add project.slug %}">Add a teleconference</a></li>
+</ul>
+{% endif %}
+
+<h2>Next Teleconference</h2>
+
+
+{% if upcoming_tele_list %}
+	<p><b>Date:</b> {{ upcoming_tele_list.0.time|date:"D, d M, Y" }}
+	{% if time_zone %}
+		<br><b>Local Time</b>: 
+			{% for tz, time in upcoming_tele_list.0.return_times %}
+				{% ifequal tz time_zone %}
+					{{ time|date:" f A" }} ({{ tz }})</a></li>
+				{% endifequal %}
+			{% endfor %}
+		<br><b>UTC Time</b>: {{ upcoming_tele_list.0.return_times.4.1|date:" f A" }} 
+		{% else %}
+			<br><b>Time:</b>
+			{% for tz, time in upcoming_tele_list.0.return_times %}{{ time|date:" f A" }} ({{ time.tzinfo }}) {% endfor %}</a></li>
+		{% endif %}
+	{% if upcoming_tele_list.0.duration %}
+		<br><b>Duration</b>: {{ upcoming_tele_list.0.duration|time:"G \h\r" }}{% ifnotequal upcoming_tele_list.0.duration.minute 00 %}{{ upcoming_tele_list.0.duration|time:" i \m\i\n\u\t\e\s" }}{% endifnotequal %} 
+	{% endif %}
+	{% if upcoming_tele_list.0.phone %}
+		<br><b>Phone</b>: {{ upcoming_tele_list.0.phone }}
+	{% endif %}
+	{% if upcoming_tele_list.0.phone_code %}
+		<br><b>Phone Code</b>: {{ upcoming_tele_list.0.phone_code }}
+	{% endif %}
+	{% if upcoming_tele_list.0.online_uri %}
+		<br><b>Online URL</b>: {{ upcoming_tele_list.0.online_uri|urlize }}
+	{% endif %}
+	{% if upcoming_tele_list.0.online_userid %}
+		<br><b>Online UserID</b>: {{ upcoming_tele_list.0.online_userid }}
+	{% endif %}
+	{% if upcoming_tele_list.0.online_password %}
+		<br><b>Online Password</b>: {{ upcoming_tele_list.0.online_password }}
+	{% endif %}
+	<br><h2>Agenda</h2> {{ upcoming_tele_list.0.agenda|textile }}
+	<br><a href="{{ upcoming_tele_list.0.get_absolute_url }}">Details</a>
+	{% if user.is_authenticated %}
+		{% if not time_zone %}
+			<p><p><b>Note:</b> You can set a preferred time zone in your <a href="{% url profiles_edit_profile %}">profile</a>.</p>
+		{% endif %}
+	{% endif %}
+{% else %}
+	<p>No teleconferences have been scheduled.</p>
+{% endif %}
+
+
+<h2>Upcoming Teleconferences</h2>
+{% if upcoming_tele_list %}
+	<ul>
+	{% for teleconference in upcoming_tele_list %}
+		<li><a href="{{ teleconference.get_absolute_url }}">{{ teleconference.time|date:"D d M Y, \a\t"}}
+			{% if time_zone %}
+				{% for tz, time in teleconference.return_times %}
+					{% ifequal tz time_zone %}
+						{{ time|date:" f A" }} ({{ tz }})</a></li>
+					{% endifequal %}
+				{% endfor %}
+			{% else %}
+				{% for tz, time in teleconference.return_times %}{{ time|date:" f A" }} ({{ time.tzinfo }}) {% endfor %}</a></li>
+			{% endif %}
+	{% endfor %}
+	</ul>
+{% else %}
+	<p> There are no upcoming teleconferences!</p>
+{% endif %}
+<h2>Past Teleconferences</h2>
+{% if past_tele %}
+	<ul>
+	{% for teleconference in past_tele %}
+		<li><a href="{{ teleconference.get_absolute_url }}">{{ teleconference.time|date:"D d M Y, \a\t"}}
+			{% if time_zone %}
+				{% for tz, time in teleconference.return_times %}
+					{% ifequal tz time_zone %}
+						{{ time|date:" f A" }} ({{ tz }})</a></li>
+					{% endifequal %}
+				{% endfor %}
+			{% else %}
+				{% for tz, time in teleconference.return_times %}{{ time|date:" f A" }} ({{ time.tzinfo }}) {% endfor %}</a></li>
+			{% endif %}
+	{% endfor %}
+	</ul>
+{% else %}
+	<p> There are no past teleconferences!</p>
+{% endif %}
+
+{% endblock %}
+

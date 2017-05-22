@@ -1,0 +1,15 @@
+{% extends "project/base.html" %}
+
+{% block content %}
+
+<h2>Are you sure you want to delete {{ description }}?</h2>
+
+
+<form method=POST action="">
+	<table>{{ form.as_table }}</table>
+	<input type="submit" name="Yes" value="Yes, I'm sure!" />
+	<input type="submit" name="No" value="No, I changed my mind." />
+</form>
+
+
+{% endblock %}

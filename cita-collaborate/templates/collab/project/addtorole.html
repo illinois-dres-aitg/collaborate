@@ -1,0 +1,13 @@
+{% extends "project/bulk.html" %}
+
+{% block head_title %}{{ block.super }}: Bulk {% ifequal task "add" %}add users to {% else %}remove users from {% endifequal %}roles{% endblock %}
+
+{% block h1 %}{{ block.super }}: Bulk {% ifequal task "add" %}add users to {% else %}remove users from {% endifequal %}roles{% endblock %}
+
+
+{% block h2 %}{% ifequal task "add" %}Add users to {% else %}Remove users from {% endifequal %}roles{% endblock %}
+
+{% block tablesummary %}{% ifequal task "add" %}Adding to{% else %}Removing from{% endifequal %} roles{% endblock %}
+{% block submitvalue %}{% ifequal task "add" %}Add users to {% else %}Remove users from {% endifequal %}selected roles.{% endblock %}
+
+

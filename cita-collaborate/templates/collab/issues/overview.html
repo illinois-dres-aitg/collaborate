@@ -1,0 +1,48 @@
+{% extends "issues/base.html" %}
+{% load markup %}
+
+{% block head_title %}{{ block.super }}Overview{% endblock %}
+
+{% block h1 %}{{ block.super }}Overview{% endblock %}
+
+{% block content %}
+
+<h2 class="offscreen">Operations</h2>
+<ul class="linear">
+	{% if editable %}
+		<li class="linear"><a href="{% url issueset_add project.slug %}">Add an issue list</a></li>
+	{% endif %}					
+	<li class="linear"><a href="{% url issues_latest project_name=project.slug %}">Recently updated issues</a></li>
+</ul>
+
+
+<h2>Active issue lists</h2>
+
+{% if active_issuesets_list %}
+	<ul>
+		{% for issueset in active_issuesets_list %}
+			<li>
+				<a href="{{ issueset.get_absolute_url }}">{{ issueset.name }}</a>
+	 		</li>
+		{% endfor %}
+	</ul>
+{% else %}
+	<p>There are no active issue lists.</p>
+{% endif %}
+
+<h2>Inactive issue lists</h2>
+
+{% if inactive_issuesets %}
+	<ul>
+		{% for issueset in inactive_issuesets %}
+			<li>
+				<a href="{{ issueset.get_absolute_url }}">{{ issueset.name }}</a>
+	 		</li>
+		{% endfor %}
+	</ul>
+{% else %}
+	<p>There are no inactive issue lists.</p>
+{% endif %}
+
+
+{% endblock %}

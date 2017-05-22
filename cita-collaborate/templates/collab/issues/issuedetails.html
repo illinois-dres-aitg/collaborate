@@ -1,0 +1,125 @@
+{% extends "issues/issue_base.html" %}
+{% load markup %}
+{% load comments %}
+
+
+{% block head_title %}{{ block.super }}{{ issue.title }}{% endblock %}
+
+{% block h1 %}{{ block.super }}{{ issue.title }}{% endblock %}
+
+{% block content %}
+
+{% if deletable %}
+<h2 class="offscreen">Operations</h2>
+<ul class="linear">
+	<li class="linear"><a href="{% url issue_edit project_name=project.slug,issueset_id=issue.issueset.id,issue_id=issue.id %}">Modify this issue</a></li>
+	<li class="linear"><a href="{% url issue_add project.slug,issue.issueset.id %}">Add a new issue</a></li>
+</ul>
+{% endif %}
+
+
+
+<h2>Issue {{ issue.number }}</h2>
+	<table summary="Issue details">
+		<tr><td>Title</td><td>{{ issue.title }}</td></tr>
+		<tr><td>Status</td><td>{{ issue.status }}</td></tr>
+		<tr><td>Priority</td><td>{{ issue.priority }}</td></tr>
+		<tr><td>Description</td><td>{{ issue.description|textile }}</td></tr>
+		<tr><td>Reporter</td><td>{{ issue.reporter }}</td></tr>
+		<tr><td>Date Reported</td><td>{{ issue.reported_date|date:"D, d M Y" }}</td></tr>
+		<tr><td>Last Updated</td><td>{{ issue.updated_date|date:"D, d M Y" }}</td></tr>
+		{% if issue.vendor_tracking %}
+			<tr><td>Vendor Tracking</td><td>{{ issue.vendor_tracking }}</td></tr>
+		{% endif %}
+		{% if issue.version %}
+			<tr><td>Version</td><td>{{ issue.version }}</td></tr>
+		{% endif %}
+		{% if issue.model %}
+			<tr><td>Model</td><td>{{ issue.model }}</td></tr>
+		{% endif %}
+		{% if issue.section %}
+			<tr><td>Section</td><td>{{ issue.section }}</td></tr>
+		{% endif %}
+		{% if issue.code %}
+			<tr><td>Code</td><td><pre>{{ issue.code }}</pre></td></tr>
+		{% endif %}
+		{% if issue.snapshot %}
+			<tr><td>Snapshot</td><td><pre>{{ issue.snapshot }}</pre></td></tr>
+		{% endif %}
+		{% if issue.company_reported_date %}
+			<tr><td>Date Reported to Company</td><td>{{ issue.company_reported_date|date:"D, d M Y" }}</td></tr>
+		{% endif %}
+		{% if issue.company_response %}
+			<tr><td>Section</td><td>{{ issue.company_response|textile }}</td></tr>
+		{% endif %}
+		{% if issue.estimated_fix %}
+			<tr><td>Estimated Fix Date</td><td>{{ issue.estimated_fix|date:"D, d M Y" }}</td></tr>
+		{% endif %}
+		{% if issue.verified_fix %}
+			<tr><td>Verified Fix Date</td><td>{{ issue.verified_fix|date:"D, d M Y" }}</td></tr>
+		{% endif %}
+		{% if issue.fix_comment %}
+			<tr><td>Comment on Fix</td><td>{{ issue.fix_comment|textile }}</td></tr>
+		{% endif %}
+	</table>
+
+<h2>Image attachments</h2>
+{% if issue.images.count %}
+	<ul>
+	{% for image in issue.images.all %}
+		<li>
+			<a target="collab_image" href="{{ image.img.url }}">{{ image.desc }}</a> ({{ image.size_in_kb }} kB)
+			{% if delete_image %}
+				<a href="{% url image_delete image.id %}">Delete</a>
+			{% endif %}
+		</li>
+	{% endfor %}
+	</ul>
+{% else %}
+	<p>There are no images!</p>
+{% endif %}
+
+{% if logged_in %}
+	<p><a href="{% url image_upload project.slug,issue.issueset.id,issue.id %}">Upload image</a>
+{% endif %}
+
+
+{% get_comment_list for issue as comment_list %}
+{% if comment_list %}
+	<h2>Comments</h2>
+	<dl>
+	{% for comment in comment_list %}
+		<dt>{{ comment.user }}</dt>
+		<dd>{{ comment.submit_date|date:"H:i \o\n D, d M Y" }}</dd>
+		<dd>{{ comment.comment|textile }}</dd>
+	{% endfor %}
+	</dl>
+{% else %}
+<p> There are no comments.
+<hr>
+{% endif %}
+
+
+{% if logged_in %}
+
+	{% get_comment_form for issue as form %}
+	
+	<div class="form">
+	<form action="{% comment_form_target %}" method="POST">
+		<table summary="Form for adding a comment">
+			<tr><th class="form"><label for="id_comment">Comment:</label></th><td><textarea id="id_comment" rows="10" cols="72" name="comment"></textarea></td></tr>
+			<tr style="display:none;"><th class="form"><label for="id_honeypot">If you enter anything in this field your comment will be treated as spam:</label></th><td>{{ form.honeypot }}{{ form.content_type }}{{ form.object_pk }}{{ form.timestamp }}{{ form.security_hash }}</td></tr>
+		</table>
+	  <p class="submit">
+		 <input type="hidden" name="next" value="{{ issue.get_absolute_url }}"/>
+	    <input type="submit" name="submit" class="submit-post" value="Submit comment" >
+	  </p>
+	</form>
+	</div>
+	
+	{% include 'markup.html' %}
+
+{% endif %}
+
+{% endblock %}
+
